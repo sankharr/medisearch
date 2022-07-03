@@ -1,11 +1,143 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { SiShopware } from 'react-icons/si';
 import { MdOutlineCancel } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { links } from '../data/dummy';
+import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
+import { FiShoppingBag, FiEdit, FiPieChart, FiSettings } from 'react-icons/fi';
+import { BsKanban, BsBarChart } from 'react-icons/bs';
+import { BiColorFill } from 'react-icons/bi';
+import { IoMdContacts } from 'react-icons/io';
+import { RiContactsLine, RiStockLine } from 'react-icons/ri';
+import { GiLouvrePyramid } from 'react-icons/gi';
+import { FaThList } from 'react-icons/fa';
+import { CompanyName } from './variables';
+
+// import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
+
+const links = [
+  {
+    title: 'Dashboard',
+    links: [
+      {
+        name: 'queries',
+        icon: <FaThList />,
+      },
+      //   {
+      //     name: 'orders',
+      //     icon: <AiOutlineShoppingCart />,
+      //   },
+      //   {
+      //     name: 'employees',
+      //     icon: <IoMdContacts />,
+      //   },
+      //   {
+      //     name: 'customers',
+      //     icon: <RiContactsLine />,
+      //   },
+      //   {
+      //     name: 'ecommerce',
+      //     icon: <FiShoppingBag />,
+      //   },
+      {
+        name: 'settings',
+        icon: <FiSettings />,
+      },
+    ],
+  },
+];
+
+// const links = [
+//   {
+//     title: 'Dashboard',
+//     links: [
+//       {
+//         name: 'ecommerce',
+//         icon: <FiShoppingBag />,
+//       },
+//     ],
+//   },
+
+//   {
+//     title: 'Pages',
+//     links: [
+//       {
+//         name: 'orders',
+//         icon: <AiOutlineShoppingCart />,
+//       },
+//       {
+//         name: 'employees',
+//         icon: <IoMdContacts />,
+//       },
+//       {
+//         name: 'customers',
+//         icon: <RiContactsLine />,
+//       },
+//     ],
+//   },
+//   {
+//     title: 'Apps',
+//     links: [
+//       {
+//         name: 'calendar',
+//         icon: <AiOutlineCalendar />,
+//       },
+//       {
+//         name: 'kanban',
+//         icon: <BsKanban />,
+//       },
+//       {
+//         name: 'editor',
+//         icon: <FiEdit />,
+//       },
+//       {
+//         name: 'color-picker',
+//         icon: <BiColorFill />,
+//       },
+//     ],
+//   },
+//   {
+//     title: 'Charts',
+//     links: [
+//       {
+//         name: 'line',
+//         icon: <AiOutlineStock />,
+//       },
+//       {
+//         name: 'area',
+//         icon: <AiOutlineAreaChart />,
+//       },
+
+//       {
+//         name: 'bar',
+//         icon: <AiOutlineBarChart />,
+//       },
+//       {
+//         name: 'pie',
+//         icon: <FiPieChart />,
+//       },
+//       {
+//         name: 'financial',
+//         icon: <RiStockLine />,
+//       },
+//       {
+//         name: 'color-mapping',
+//         icon: <BsBarChart />,
+//       },
+//       {
+//         name: 'pyramid',
+//         icon: <GiLouvrePyramid />,
+//       },
+//       {
+//         name: 'stacked',
+//         icon: <AiOutlineBarChart />,
+//       },
+//     ],
+//   },
+// ];
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
@@ -25,7 +157,7 @@ const Sidebar = () => {
         <>
           <div className="flex justify-between items-center">
             <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-              <SiShopware /> <span>MediSearch</span>
+              <SiShopware /> <span>{CompanyName}</span>
             </Link>
             <TooltipComponent content="Menu" position="BottomCenter">
               <button
