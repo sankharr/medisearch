@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const cors = require("cors");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const PORT = process.env.PORT_ONE || 4040;
 const path = require("path");
@@ -16,7 +16,7 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 //This will convert to json
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 // creating and initializing rabbitmq queue
 async function connect() {
