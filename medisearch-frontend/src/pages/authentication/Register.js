@@ -14,6 +14,7 @@ import {
 import FirebaseRegister from "./auth-forms/AuthRegister";
 import AuthWrapper from "./AuthWrapper";
 import { useState } from "react";
+import { CircularProgress } from "../../../node_modules/@mui/material/index";
 
 // ================================|| REGISTER ||================================ //
 
@@ -29,12 +30,24 @@ const CompletetionAlert = (props) => {
     );
   } else {
     return (
-      <Container sx={{ width: "20rem" }}>
-        <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          Registration Successful!
-        </Alert>
-      </Container>
+      <Grid container sx={{ width: "20rem" }} spacing={2}>
+        <Grid item xs={12}>
+          <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            Registration Successful!
+          </Alert>
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={2}>
+            <Grid item xs={1}>
+              <CircularProgress size={25} />
+            </Grid>
+            <Grid item xs={10}>
+              Redirecting to Login...
+            </Grid>
+          </Stack>
+        </Grid>
+      </Grid>
     );
   }
 };

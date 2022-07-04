@@ -31,6 +31,7 @@ import { strengthColor, strengthIndicator } from "utils/password-strength";
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { useNavigate } from "../../../../node_modules/react-router/index";
 
 const URL = "http://localhost:4040/auth/register";
 
@@ -39,6 +40,9 @@ const URL = "http://localhost:4040/auth/register";
 const AuthRegister = ({setSubmitCompleted, setIsError}) => {
   const [level, setLevel] = useState();
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
 //   const [submitCompleted, setSubmitCompleted] = useState(false);
 //   const [isError, setIsError] = useState(false);
 
@@ -73,6 +77,7 @@ const AuthRegister = ({setSubmitCompleted, setIsError}) => {
         console.log("Reservation successfully updated");
         setSubmitCompleted(true);
         setIsError(false);
+        // setTimeout(() => navigate('/login'),2000)
         // console.log("is error state (then) => ", isError);
       })
       .catch((error) => {
@@ -100,6 +105,7 @@ const AuthRegister = ({setSubmitCompleted, setIsError}) => {
             lastname: "",
             phoneNumber: "",
             city: "",
+            district: "",
             email: "",
             password: "",
             submit: null,
@@ -109,6 +115,7 @@ const AuthRegister = ({setSubmitCompleted, setIsError}) => {
             lastname: Yup.string().max(255).required("Last Name is required"),
             phoneNumber: Yup.number().required("Phone Number is required"),
             city: Yup.string().max(255).required("City is required"),
+            district: Yup.string().max(255).required("District is required"),
             email: Yup.string()
               .email("Must be a valid email")
               .max(255)
@@ -217,7 +224,6 @@ const AuthRegister = ({setSubmitCompleted, setIsError}) => {
                       fullWidth
                       error={Boolean(touched.city && errors.city)}
                       id="city-login"
-                      type="city"
                       value={values.city}
                       name="city"
                       onBlur={handleBlur}
@@ -228,6 +234,29 @@ const AuthRegister = ({setSubmitCompleted, setIsError}) => {
                     {touched.city && errors.city && (
                       <FormHelperText error id="helper-text-city-signup">
                         {errors.city}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="district-signup">
+                      District*
+                    </InputLabel>
+                    <OutlinedInput
+                      fullWidth
+                      error={Boolean(touched.email && errors.email)}
+                      id="district-signup"
+                      value={values.district}
+                      name="district"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Colombo"
+                      inputProps={{}}
+                    />
+                    {touched.district && errors.district && (
+                      <FormHelperText error id="helper-text-district-signup">
+                        {errors.district}
                       </FormHelperText>
                     )}
                   </Stack>

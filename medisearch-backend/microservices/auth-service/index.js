@@ -28,7 +28,7 @@ async function connect() {
 connect().catch((err) => console.log("error from amqp Connect - ", err));
 
 app.post("/auth/register", async (req, res) => {
-  const { email, password, name, phoneNumber, city } = req.body;
+  const { email, password, name, phoneNumber, city, district } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     return res.json({ message: "User already exists" });
@@ -51,6 +51,7 @@ app.post("/auth/register", async (req, res) => {
               name,
               phoneNumber,
               city,
+              district
             })
           )
         );
@@ -82,6 +83,8 @@ app.post("/auth/login", async (req, res) => {
       email,
       name: user.name,
       docID: user._id,
+      city: user.city,
+      district: user.district
     };
     jwt.sign(payload, "secret", (err, token) => {
       if (err) console.log(err);
