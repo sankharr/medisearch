@@ -81,10 +81,11 @@ app.post("/auth/login", async (req, res) => {
     const payload = {
       email,
       name: user.name,
+      docID: user._id,
     };
     jwt.sign(payload, "secret", (err, token) => {
       if (err) console.log(err);
-      else return res.json({ token: token });
+      else return res.json({ ...payload,token: token });
     });
   }
 });

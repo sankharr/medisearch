@@ -27,7 +27,11 @@ import SettingTab from './SettingTab';
 
 // assets
 import avatar1 from 'assets/images/users/avatar-1.png';
+import user from 'assets/images/users/user-2.png'
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+
+// redux
+import { useSelector } from 'react-redux';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -55,6 +59,10 @@ function a11yProps(index) {
 
 const Profile = () => {
     const theme = useTheme();
+
+    // redux
+    const userData = useSelector((state)=>state.authdata)
+    const { name, email, token, userDocID } = userData;
 
     const handleLogout = async () => {
         // logout
@@ -97,8 +105,8 @@ const Profile = () => {
                 onClick={handleToggle}
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-                    <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
-                    <Typography variant="subtitle1">John Doe</Typography>
+                    <Avatar alt="profile user" src={user} sx={{ width: 32, height: 32 }} />
+                    <Typography variant="subtitle1">{name}</Typography>
                 </Stack>
             </ButtonBase>
             <Popper
@@ -139,11 +147,11 @@ const Profile = () => {
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <Grid item>
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
-                                                        <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
+                                                        <Avatar alt="profile user" src={user} sx={{ width: 32, height: 32 }} />
                                                         <Stack>
-                                                            <Typography variant="h6">John Doe</Typography>
+                                                            <Typography variant="h6">{name}</Typography>
                                                             <Typography variant="body2" color="textSecondary">
-                                                                UI/UX Designer
+                                                                Untitled
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>

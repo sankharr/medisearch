@@ -20,7 +20,23 @@ const dashboard = {
             url: '/dashboard/default',
             icon: icons.DashboardOutlined,
             breadcrumbs: false
+        },
+        {
+            id: 'queries',
+            title: 'Queries',
+            type: 'item',
+            url: '/queries',
+            icon: icons.DashboardOutlined,
+            breadcrumbs: false
         }
+        // {
+        //     id: 'createRequest',
+        //     title: 'Dashboard',
+        //     type: 'item',
+        //     url: '/createRequest',
+        //     icon: icons.DashboardOutlined,
+        //     breadcrumbs: false
+        // }
     ]
 };
 

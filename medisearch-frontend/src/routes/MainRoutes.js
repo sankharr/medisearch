@@ -15,6 +15,8 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
+const Queries = Loadable(lazy(() => import('pages/extra-pages/Queries')));
+const CreateRequest = Loadable(lazy(() => import('pages/extra-pages/CreateRequest')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -53,6 +55,18 @@ const MainRoutes = {
         },
         {
             path: 'icons/ant',
+            element: <AntIcons />
+        },
+        {
+            path: 'queries',
+            element: <Queries />
+        },
+        {
+            path: 'createRequest',
+            element: <CreateRequest />
+        },
+        {
+            path: 'settings',
             element: <AntIcons />
         }
     ]
