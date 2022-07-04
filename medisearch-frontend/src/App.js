@@ -1,16 +1,19 @@
-// project import
-import Routes from 'routes';
-import ThemeCustomization from 'themes';
-import ScrollTop from 'components/ScrollTop';
+// routes
+import Router from './routes';
+// theme
+import ThemeProvider from './theme';
+// components
+import ScrollToTop from './components/ScrollToTop';
+import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 
-// ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
+// ----------------------------------------------------------------------
 
-const App = () => (
-    <ThemeCustomization>
-        <ScrollTop>
-            <Routes />
-        </ScrollTop>
-    </ThemeCustomization>
-);
-
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider>
+      <ScrollToTop />
+      <BaseOptionChartStyle />
+      <Router />
+    </ThemeProvider>
+  );
+}

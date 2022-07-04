@@ -1,130 +1,40 @@
-# Mantis Free React Material UI Dashboard Template [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Download%20Mantis%20React%20-%20The%20professional%20Material%20designed%20React%20Admin%20Dashboard%20Template%20&url=https://mantisdashboard.io&via=codedthemes&hashtags=reactjs,webdev,developers,javascript)
+## Minimal [(Free version)](https://minimal-kit-react.vercel.app/)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/codedthemes/mantis-free-react-admin-template/blob/main/LICENSE)
-[![GitHub package version](https://img.shields.io/github/package-json/v/codedthemes/mantis-free-react-admin-template)](https://github.com/codedthemes/mantis-free-react-admin-template/)
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Mantis is a free and open source React redux dashboard template made using the Material UI React component library with aim of flexibility and better customizability.
+> Free React Admin Dashboard made with Material-UI components and React.
 
-### Name Derived From Nature
+![preview](public/static/preview.jpg)
 
-Mantis Logo is inspired from the insect name - 'Mantises' as they have triangular heads with flexible Necks. Also, the name is derived from two popular UI frameworks, Material UI and Ant Design (M-Ant-is).
+| [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
+| ----------------------------------------------------- | :---------------------------------------------------------------- |
+| **7** Demo pages                                      | **42+** demo pages                                                |
+| -                                                     | ✓ Multi-language                                                  |
+| -                                                     | ✓ Dark/Light Mode 🌓                                              |
+| -                                                     | ✓ [More components](https://minimals.cc/components)               |
+| -                                                     | ✓ TypeScript version                                              |
+| -                                                     | ✓ Design files (Figma & Sketch)                                   |
 
-Mantis has Ant Design principal on top of the MAterial UI React component library.
+## Page demo
 
-:star: :star: :star: Support us by giving star (Top right of this page) if you like the theme :star: :star: :star:
-
-![mantis-free-react-dashboard-template.jpg](https://mantisdashboard.io/adv-banner-images/og-social.png)
-
-The [Pro version](https://mantisdashboard.io) of Mantis react template includes features such as TypeScript, apps, authentication methods (i.e. JWT, Auth0, Firebase), advance components, form plugins, layouts, widgets, and more.
-
-| [Mantis Free](https://mantisdashboard.io/free) | [Mantis Pro](https://mantisdashboard.io)                          |
-| ---------------------------------------------- | :---------------------------------------------------------------- |
-| **9** Demo pages                               | **130+** Demo pages                                               |
-| -                                              | ✓ Multi-language                                                  |
-| -                                              | ✓ Dark/Light Mode 🌓                                              |
-| -                                              | ✓ TypeScript version                                              |
-| -                                              | ✓ Design files (Figma)                                            |
-| -                                              | ✓ Multiple color options                                          |
-| -                                              | ✓ RTL                                                             |
-| -                                              | ✓ JWT, Firebase, Auth0, AWS authentication                        |
-| -                                              | ✓ [More components](https://mantisdashboard.io/dashboard/default) |
-| ✓ MIT License                                  | ✓ [Pro License](https://mui.com/store/license/)                   |
-
-## Why Mantis?
-
-Mantis offers everything needed to build an advanced dashboard application. In the initial release, we included following high-end features,
-
--   Professional user interface.
--   Material UI React components.
--   Fully responsive, all modern browser supported.
--   Easy to use code structure
--   Flexible & high-Performance code
--   Simple documentation
-
-## Free Mantis React version
-
-#### Preview
-
--   [Demo](https://mantisdashboard.io/free)
-
-#### Download
-
--   [Download from GitHub](https://github.com/codedthemes/mantis-free-react-admin-template)
-
-## Mantis Pro version
-
-#### Preview
-
--   [Demo](https://mantisdashboard.io)
-
-#### Purchase
-
--   [Buy now](https://mui.com/store/items/mantis-react-admin-dashboard-template/)
-
-## Table of contents
-
--   [Getting started](#getting-started)
--   [Documentation](#documentation)
--   [Technology stack](#technology-stack)
--   [Author](#author)
--   [Issues?](#issues)
--   [License](#license)
--   [More products](#more-free-react-material-admin-templates)
--   [Follow us](#follow-us)
+- [Dashboard](https://minimal-kit-react.vercel.app/dashboard/app)
+- [Users](https://minimal-kit-react.vercel.app/dashboard/user)
+- [Product](https://minimal-kit-react.vercel.app/dashboard/products)
+- [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
+- [Login](https://minimal-kit-react.vercel.app/login)
+- [Register](https://minimal-kit-react.vercel.app/register)
+- [Not Found](https://minimal-kit-react.vercel.app/404)
 
 ## Getting started
 
-Clone from GitHub
-
-```
-git clone https://github.com/codedthemes/mantis-free-react-admin-template.git
-yarn
-yarn start
-```
-
-## Documentation
-
-[Mantis documentation](https://codedthemes.gitbook.io/mantis-react/) helps you out in all aspects from Installation to deployment.
-
-## Technology stack
-
--   [Material UI V5](https://mui.com/core/)
--   Built with React Hooks API.
--   Redux & React context API for state management.
--   Redux toolkit.
--   React Router for navigation routing.
--   Support for react-script.
--   Code splitting.
--   CSS-in-JS.
-
-## Author
-
-Mantis is managed by team [CodedThemes](https://codedthemes.com).
-
-## Issues
-
-Please generate a [GitHub issue](https://github.com/codedthemes/mantis-free-react-admin-template/issues) if you found a bug in any version. We are try our best to resolve the issue.
+- Recommended `node js 14.x` and `npm 6+`
+- Install dependencies: `npm install` or `yarn install`
+- Start the project: `npm run start` or `yarn start`
 
 ## License
 
--   Licensed under [MIT](https://github.com/codedthemes/datta-able-bootstrap-dashboard/blob/master/LICENSE)
+Distributed under the MIT License. See [LICENSE](https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
 
-## Checkout free React Material admin templates
+## Contact us
 
--   [Free Materially](https://codedthemes.com/item/materially-free-reactjs-admin-template/)
--   [Free Berry](https://mui.com/store/items/berry-react-material-admin-free/)
-
-## Checkout premium React Material admin templates
-
--   [Materially](https://codedthemes.com/item/materially-reactjs-admin-dashboard/)
--   [Berry](https://mui.com/store/items/berry-react-material-admin/)
-
-## Follow us
-
--   Website [https://mantisdashboard.io](https://mantisdashboard.io)
--   Blog [https://blog.mantisdashboard.io](https://blog.mantisdashboard.io)
--   CodedThemes [https://codedthemes.com](https://codedthemes.com)
--   Dribbble [https://dribbble.com/codedthemes](https://dribbble.com/codedthemes)
--   Facebook [https://www.facebook.com/codedthemes](https://www.facebook.com/codedthemes)
--   Twitter [https://twitter.com/codedthemes](https://twitter.com/codedthemes)
+Email Us: support@minimals.cc
