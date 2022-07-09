@@ -18,47 +18,6 @@ export default function RegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const RegisterSchema = Yup.object().shape({
-    firstname: Yup.string().max(255).required("First Name is required"),
-    lastname: Yup.string().max(255).required("Last Name is required"),
-    phoneNumber: Yup.number().required("Phone Number is required"),
-    city: Yup.string().max(255).required("City is required"),
-    district: Yup.string().max(255).required("District is required"),
-    email: Yup.string()
-      .email("Must be a valid email")
-      .max(255)
-      .required("Email is required"),
-    password: Yup.string().max(255).required("Password is required"),
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      firstname: "",
-      lastname: "",
-      phoneNumber: "",
-      city: "",
-      district: "",
-      email: "",
-      password: "",
-    },
-    validationSchema: RegisterSchema,
-    onSubmit: (values) => {
-      try {
-        // setStatus({ success: false });
-        // setSubmitting(false);
-        console.log("form values => ", values);
-        submitValues(values);
-      } catch (err) {
-        console.error("form submission error => ", err);
-        // setStatus({ success: false });
-        // setErrors({ submit: err.message });
-        // setSubmitting(false);
-      }
-      console.log("form values => ", values);
-      //   navigate("/dashboard", { replace: true });
-    },
-  });
-
   const submitValues = (formObject) => {
     let dataObject = {
       name: formObject.firstname + " " + formObject.lastname,
@@ -77,6 +36,7 @@ export default function RegisterForm() {
         // setSubmitCompleted(true);
         // setIsError(false);
         // setTimeout(() => navigate('/login'),2000)
+        navigate('/login')
         // console.log("is error state (then) => ", isError);
       })
       .catch((error) => {
@@ -102,7 +62,6 @@ export default function RegisterForm() {
         district: "",
         email: "",
         password: "",
-        submit: null,
       }}
       validationSchema={Yup.object().shape({
         firstname: Yup.string().max(255).required("First Name is required"),
@@ -173,7 +132,6 @@ export default function RegisterForm() {
               type="email"
               name="email"
               label="Email address"
-              id="email-login"
               value={values.email}
               onBlur={handleBlur}
               onChange={handleChange}

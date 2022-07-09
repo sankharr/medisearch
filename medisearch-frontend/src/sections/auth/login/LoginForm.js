@@ -8,10 +8,19 @@ import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 
+import axios from "axios";
+
+// redux
+import { useDispatch } from 'react-redux';
+import { updateLogin } from "../../../store/reducers/authdata";
+
 // ----------------------------------------------------------------------
+
+const URL = "http://localhost:4040/auth/login";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -28,7 +37,9 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+        console.log("form data - ", formik.values)
+        login(formik.values)
+    //   navigate('/dashboard', { replace: true });
     },
   });
 
@@ -36,6 +47,32 @@ export default function LoginForm() {
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
+  };
+
+  const login = (formData) => {
+    axios
+      .post(URL, formData)
+      .then((res) => {
+        console.log(res.data);
+        console.log("Successfully logged in");
+        dispatch(updateLogin({name: res.data.name, email: res.data.email, token: res.data.token, userDocID: res.data.docID }))
+        // document.cookie = `name=${res.data.name};`;
+        // document.cookie = `email=${res.data.email};`;
+        // document.cookie = `token=${res.data.token};`;
+        // document.cookie = `userDocID=${res.data.docID};`;
+        sessionStorage.setItem("name", res.data.name)
+        sessionStorage.setItem("email", res.data.email)
+        sessionStorage.setItem("token", res.data.token)
+        sessionStorage.setItem("userDocID", res.data.docID)
+
+        
+        navigate("/dashboard/app", { replace: true });
+      })
+      .catch((error) => {
+          console.log(error);
+        //   setSubmitCompleted(true);
+        //   setIsError(true);
+      });
   };
 
   return (
