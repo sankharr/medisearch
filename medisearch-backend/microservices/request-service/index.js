@@ -2,10 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 var cors = require("cors");
 const dotenv = require("dotenv");
-const PORT = process.env.PORT_ONE || 5050;
+const PORT = process.env.PORT_ONE || 6060;
 const path = require("path");
-const Query = require("./Query");
-const jwt = require("jsonwebtoken");
+const Request = require("./Request");
 const amqp = require("amqplib");
 // const isAuthenticated = require("../../isAuthenticated");
 var order;
@@ -18,36 +17,75 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 app.use(express.json());
 
-// route to get all patients
-app.get("/query", async (req, res) => {
-  let queries;
+// route to get all requests
+app.get("/requests", async (req, res) => {
+  let requests;
   try {
-    queries = await Query.find();
+    requests = await Request.find();
   } catch (error) {
     console.log(err);
   }
 
-  if (!queries) {
+  if (!requests) {
     return res.status(404).json({ message: "No queries found" });
   }
   // console.log("products - ",products)
-  return res.status(200).json({ queries });
+  return res.status(200).json({ requests });
 });
 
-//  route to get patient by id
-app.get("/query/:id", async (req, res) => {
+//  route to get requests by id
+app.get("/requests/:id", async (req, res) => {
   const id = req.params.id;
-  let query;
+  let request;
   try {
-    query = await Query.findById(id);
+    request = await Request.findById(id);
   } catch (error) {
     console.log(err);
   }
 
-  if (!query) {
+  if (!request) {
     return res.status(404).json({ message: "No query found" });
   }
-  return res.status(200).json({ query });
+  return res.status(200).json({ request });
+});
+
+// function to create a request
+app.post("/requests", async (req, res) => {
+  let requestedData;
+  const { requestorName, requestorDocID, email, medicineList } = req.body;
+
+  channel.sendToQueue(
+    "PATIENT",
+    Buffer.from(
+      JSON.stringify({
+        requestType: "dataForRequest",
+        requestorDocID,
+      })
+    )
+  );
+  await channel.consume("REQUEST", (data) => {
+    requestedData = JSON.parse(data.content);
+    console.log("Consuming recieved data from PATIENT - ", requestedData.res);
+    channel.ack(data);
+
+    let newRequest = new Request({
+      requestorName,
+      requestorDocID,
+      email,
+      phoneNumber: requestedData.res.phoneNumber,
+      city: requestedData.res.city,
+      district: requestedData.res.district,
+      medicineList,
+    });
+    newRequest.save((err, result) => {
+      if (err) console.log("error occured when saving request doc - ", err);
+      else {
+        console.log("patient doc saved");
+      }
+    });
+  });
+  //   res.end()
+  return res.json({ message: "Successfully created the request (JSON)"});
 });
 
 // function to create the Product queue
@@ -55,22 +93,22 @@ async function connect() {
   const amqpServer = "amqp://localhost:5672";
   connection = await amqp.connect(amqpServer);
   channel = await connection.createChannel();
-  await channel.assertQueue("QUERY");
+  await channel.assertQueue("REQUEST");
 }
 // creating the product queue
 connect()
-  .then(() => {
-    channel.consume("QUERY", (data) => {
-    //   console.log("Consuming from Patient service");
-    //   console.log("json data - ", JSON.parse(data.content));
-    //   const newPatient = createPatient(JSON.parse(data.content));
-    //   channel.ack(data);
-    //   console.log("acknowledged from Patient")
-    //   channel.sendToQueue("AUTH", Buffer.from(JSON.stringify({ newPatient })));
-    //   console.log("sent to AUTH queue from Patient");
-    });
-  })
-  .catch((err) => console.log("error from amqp Connect - ", err));
+  //   .then(() => {
+  //     channel.consume("REQUEST", (data) => {
+  //       //   console.log("Consuming from Patient service");
+  //       //   console.log("json data - ", JSON.parse(data.content));
+  //       //   const newPatient = createPatient(JSON.parse(data.content));
+  //       //   channel.ack(data);
+  //       //   console.log("acknowledged from Patient")
+  //       //   channel.sendToQueue("AUTH", Buffer.from(JSON.stringify({ newPatient })));
+  //       //   console.log("sent to AUTH queue from Patient");
+  //     });
+  //   })
+  .catch((err) => console.log("error from REQUEST amqp Connect - ", err));
 
 const createPatient = (data) => {
   const newPatient = new Patient({
@@ -81,9 +119,9 @@ const createPatient = (data) => {
     city: data.city,
   });
   newPatient.save((err, res) => {
-    if (err) console.log("error occured when creating patient doc - ",err);
-    else{
-        console.log("Successfully created patientDoc from patient-service")
+    if (err) console.log("error occured when creating patient doc - ", err);
+    else {
+      console.log("Successfully created patientDoc from patient-service");
     }
   });
   return newPatient;
@@ -139,16 +177,16 @@ const createPatient = (data) => {
 
 // connecting to MongoDB
 mongoose.connect(
-  process.env.CONNECTION_URL_PATIENT,
+  process.env.CONNECTION_URL_REQUEST,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },
   () => {
-    console.log(`Patient-Service DB Connected`);
+    console.log(`Request-Service DB Connected`);
   }
 );
 
 app.listen(PORT, () => {
-  console.log(`Patient-Service at ${PORT}`);
+  console.log(`Request-Service at ${PORT}`);
 });

@@ -46,18 +46,19 @@ app.post("/auth/register", async (req, res) => {
           "PATIENT",
           Buffer.from(
             JSON.stringify({
+              requestType: "createPatient",
               documentID,
               email,
               name,
               phoneNumber,
               city,
-              district
+              district,
             })
           )
         );
         channel.consume("AUTH", (data) => {
           newUser = JSON.parse(data.content);
-          console.log("Consuming return data from AUTH - ", newUser);
+          console.log("Consuming recieved data in AUTH - ", newUser);
           channel.ack(data);
         });
         //   return res.json(order);
@@ -79,16 +80,15 @@ app.post("/auth/login", async (req, res) => {
     if (password !== user.password) {
       return res.json({ message: "Password Incorrect" });
     }
+    // app.get("/auth/patient");
     const payload = {
       email,
       name: user.name,
-      docID: user._id,
-      city: user.city,
-      district: user.district
+      docID: user._id
     };
     jwt.sign(payload, "secret", (err, token) => {
       if (err) console.log(err);
-      else return res.json({ ...payload,token: token });
+      else return res.json({ ...payload, token: token });
     });
   }
 });

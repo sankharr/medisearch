@@ -65,8 +65,7 @@ export default function LoginForm() {
         sessionStorage.setItem("token", res.data.token)
         sessionStorage.setItem("userDocID", res.data.docID)
 
-        
-        navigate("/dashboard/app", { replace: true });
+        navigate("/dashboard", { replace: true });
       })
       .catch((error) => {
           console.log(error);

@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-querySchema = new Schema({
-    _id: {
-        type: Object,
+requestSchema = new Schema({
+    medicineList: {
+        type: String,
         required: true
     },
     requestorName: {
@@ -12,24 +12,28 @@ querySchema = new Schema({
         required: true
     },
     requestorDocID: {
-        type: Number,
+        type: String,
         required: true
     },
     phoneNumber: {
         type: Number,
-        // required: true
+        required: true
     },
     email: {
-        type: String
-        // required: true
+        type: String,
+        required: true
     },
     city: {
-        type: String
-        // required: true
+        type: String,
+        required: true
     },
     district: {
-        type: String
-        // required: true
+        type: String,
+        required: true
+    },
+    availablePharmacies: {
+        type: Array,
+        default: []
     },
     status: {
         type: String,
@@ -41,4 +45,4 @@ querySchema = new Schema({
     }
 });
 
-module.exports = Query = mongoose.model("Query", querySchema);
+module.exports = Request = mongoose.model("Request", requestSchema);

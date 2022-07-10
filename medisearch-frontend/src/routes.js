@@ -10,19 +10,25 @@ import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
+import Requests from './pages/Requests/Requests';
+import CreateRequest from './pages/Requests/CreateRequest';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
     {
-      path: '/dashboard',
+      path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
+        { path: '/', element: <Navigate to="/requests" /> },
+        { path: 'dashboard', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'requests', element: <Requests /> },
+        { path: 'createRequest', element: <CreateRequest /> },
+        { path: 'settings', element: <Requests /> },
       ],
     },
     {
