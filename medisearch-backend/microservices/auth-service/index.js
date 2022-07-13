@@ -28,7 +28,7 @@ async function connect() {
 connect().catch((err) => console.log("error from amqp Connect - ", err));
 
 app.post("/auth/register", async (req, res) => {
-  const { email, password, name, phoneNumber, city, district } = req.body;
+  const { email, password, name, phoneNumber, city, district, userType } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     return res.json({ message: "User already exists" });
@@ -37,6 +37,7 @@ app.post("/auth/register", async (req, res) => {
       email,
       name,
       password,
+      userType
     });
     newUser.save((err, result) => {
       if (err) console.log("error occured when saving auth doc - ", err);

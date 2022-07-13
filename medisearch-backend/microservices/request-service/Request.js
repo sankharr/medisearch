@@ -3,33 +3,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 requestSchema = new Schema({
-    medicineList: {
+    medicineName: {
         type: String,
         required: true
     },
-    requestorName: {
-        type: String,
-        required: true
-    },
-    requestorDocID: {
-        type: String,
-        required: true
-    },
-    phoneNumber: {
+    quantity: {
         type: Number,
-        required: true
+        default: 0
+        // required: true
     },
-    email: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    district: {
-        type: String,
-        required: true
+    requestorData: {
+        type: Array,
+        default: []
     },
     availablePharmacies: {
         type: Array,

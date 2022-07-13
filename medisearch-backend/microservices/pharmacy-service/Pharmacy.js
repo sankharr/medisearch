@@ -3,35 +3,32 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const reservationSchema = new Schema({
-    itemName: {
+    name: {
         type: String,
         required: true
     },
-    startDate: {
+    address: {
         type: String,
         required: true
     },
-    endDate: {
+    location: {
         type: String,
         required: true
     },
-    days: {
+    city: {
         type: Number,
     },
-    amount: {
-        type: Number,
-        required: true
-    },
-    quantity: {
+    district: {
         type: Number,
         required: true
     },
-    customerName : {
-        type: String,
+    phoneNumber: {
+        type: Number,
         required: true
     },
-    eventColor: {
-        type: String,
+    availableMedicines : {
+        type: Array,
+        default: []
     },
     lastUpdatedDate: {
         type: Date,

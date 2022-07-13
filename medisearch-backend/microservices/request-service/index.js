@@ -6,6 +6,7 @@ const PORT = process.env.PORT_ONE || 6060;
 const path = require("path");
 const Request = require("./Request");
 const amqp = require("amqplib");
+const { Console } = require("console");
 // const isAuthenticated = require("../../isAuthenticated");
 var order;
 
@@ -16,6 +17,19 @@ app.use(cors());
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 app.use(express.json());
+
+// function to create the Product queue
+async function connect() {
+  const amqpServer = "amqp://localhost:5672";
+  connection = await amqp.connect(amqpServer);
+  channel = await connection.createChannel();
+  await channel.assertQueue("REQUEST");
+}
+
+// creating the product queue
+connect().catch((err) =>
+  console.log("error from REQUEST amqp Connect - ", err)
+);
 
 // route to get all requests
 app.get("/requests", async (req, res) => {
@@ -52,128 +66,46 @@ app.get("/requests/:id", async (req, res) => {
 // function to create a request
 app.post("/requests", async (req, res) => {
   let requestedData;
-  const { requestorName, requestorDocID, email, medicineList } = req.body;
+  const {
+    requestorName,
+    requestorDocID,
+    email,
+    medicineList,
+    phoneNumber,
+    city,
+    district,
+  } = req.body;
 
-  channel.sendToQueue(
-    "PATIENT",
-    Buffer.from(
-      JSON.stringify({
-        requestType: "dataForRequest",
-        requestorDocID,
-      })
-    )
-  );
-  await channel.consume("REQUEST", (data) => {
-    requestedData = JSON.parse(data.content);
-    console.log("Consuming recieved data from PATIENT - ", requestedData.res);
-    channel.ack(data);
+  const requestorData = {
+    docID: requestorDocID,
+    name: requestorName,
+    phoneNumber,
+    city,
+    email,
+    district,
+    fulfilled: false,
+  };
 
-    let newRequest = new Request({
-      requestorName,
-      requestorDocID,
-      email,
-      phoneNumber: requestedData.res.phoneNumber,
-      city: requestedData.res.city,
-      district: requestedData.res.district,
-      medicineList,
+
+  for (item of medicineList) {
+    const newRequest = new Request({
+      medicineName: item.medicineName,
+      quantity: item.quantity,
+      requestorData,
     });
+
     newRequest.save((err, result) => {
       if (err) console.log("error occured when saving request doc - ", err);
       else {
-        console.log("patient doc saved");
+        console.log("patient doc saved - ", newRequest.medicineName);
       }
     });
+  }
+  
+  return res.json({
+    message: "Successfully completed creating the request (JSON)",
   });
-  //   res.end()
-  return res.json({ message: "Successfully created the request (JSON)"});
 });
-
-// function to create the Product queue
-async function connect() {
-  const amqpServer = "amqp://localhost:5672";
-  connection = await amqp.connect(amqpServer);
-  channel = await connection.createChannel();
-  await channel.assertQueue("REQUEST");
-}
-// creating the product queue
-connect()
-  //   .then(() => {
-  //     channel.consume("REQUEST", (data) => {
-  //       //   console.log("Consuming from Patient service");
-  //       //   console.log("json data - ", JSON.parse(data.content));
-  //       //   const newPatient = createPatient(JSON.parse(data.content));
-  //       //   channel.ack(data);
-  //       //   console.log("acknowledged from Patient")
-  //       //   channel.sendToQueue("AUTH", Buffer.from(JSON.stringify({ newPatient })));
-  //       //   console.log("sent to AUTH queue from Patient");
-  //     });
-  //   })
-  .catch((err) => console.log("error from REQUEST amqp Connect - ", err));
-
-const createPatient = (data) => {
-  const newPatient = new Patient({
-    _id: data.documentID,
-    name: data.name,
-    email: data.email,
-    phoneNumber: data.phoneNumber,
-    city: data.city,
-  });
-  newPatient.save((err, res) => {
-    if (err) console.log("error occured when creating patient doc - ", err);
-    else {
-      console.log("Successfully created patientDoc from patient-service");
-    }
-  });
-  return newPatient;
-};
-
-// // route to reserve a product
-// app.post("/product/reserve", async (req, res) => {
-//   const {
-//     itemName,
-//     startDate,
-//     endDate,
-//     days,
-//     amount,
-//     quantity,
-//     customerName,
-//     eventColor,
-//     status,
-//   } = req.body;
-//   channel.sendToQueue(
-//     "RESERVATION",
-//     Buffer.from(
-//       JSON.stringify({
-//         itemName,
-//         startDate,
-//         endDate,
-//         days,
-//         amount,
-//         quantity,
-//         customerName,
-//         eventColor,
-//         status,
-//       })
-//     )
-//   );
-// //   channel.consume("PRODUCT", (data) => {
-// //     reservation = JSON.parse(data.content);
-// //     console.log("Consuming data from PRODUCT - ", reservation);
-// //   });
-//   return res.json(order);
-// });
-
-// // route to create a product
-// app.post("/product/create", async (req, res) => {
-//   const { itemName, price, totalQuantity } = req.body;
-//   const newProduct = new Product({
-//     itemName,
-//     price,
-//     totalQuantity,
-//   });
-//   newProduct.save();
-//   return res.json(newProduct);
-// });
 
 // connecting to MongoDB
 mongoose.connect(

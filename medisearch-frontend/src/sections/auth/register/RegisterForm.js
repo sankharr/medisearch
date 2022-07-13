@@ -9,6 +9,12 @@ import { LoadingButton } from "@mui/lab";
 import Iconify from "../../../components/Iconify";
 import axios from "axios";
 
+// select
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
 // ----------------------------------------------------------------------
 
 const URL = "http://localhost:4040/auth/register";
@@ -18,6 +24,12 @@ export default function RegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [age, setAge] = useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   const submitValues = (formObject) => {
     let dataObject = {
       name: formObject.firstname + " " + formObject.lastname,
@@ -26,6 +38,7 @@ export default function RegisterForm() {
       city: formObject.city,
       district: formObject.district,
       password: formObject.password,
+      userType: formObject.userType
     };
 
     axios
@@ -36,7 +49,7 @@ export default function RegisterForm() {
         // setSubmitCompleted(true);
         // setIsError(false);
         // setTimeout(() => navigate('/login'),2000)
-        navigate('/login')
+        navigate("/login");
         // console.log("is error state (then) => ", isError);
       })
       .catch((error) => {
@@ -62,10 +75,12 @@ export default function RegisterForm() {
         district: "",
         email: "",
         password: "",
+        userType: "Patient",
       }}
       validationSchema={Yup.object().shape({
         firstname: Yup.string().max(255).required("First Name is required"),
         lastname: Yup.string().max(255).required("Last Name is required"),
+        userType: Yup.string().max(255).required("Last Name is required"),
         phoneNumber: Yup.number().required("Phone Number is required"),
         city: Yup.string().max(255).required("City is required"),
         district: Yup.string().max(255).required("District is required"),
@@ -140,7 +155,6 @@ export default function RegisterForm() {
             />
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <TextField
-                fullWidth
                 autoComplete="current-password"
                 type={showPassword ? "text" : "password"}
                 label="Password"
@@ -222,7 +236,7 @@ export default function RegisterForm() {
             </Stack>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <TextField
-                fullWidth
+                // fullWidth
                 label="Phone Number"
                 id="phoneNumber-signup"
                 value={values.phoneNumber}
@@ -232,6 +246,22 @@ export default function RegisterForm() {
                 error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                 helperText={touched.phoneNumber && errors.phoneNumber}
               />
+              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+              <Select
+                // labelId="demo-simple-select-label"
+                id="userType"
+                name="userType"
+                // label=""
+                value={values.userType}
+                placeholder="User Type"
+                label="User Type"
+                onChange={handleChange}
+                defaultChecked
+              >
+                <MenuItem value="Patient">Patient</MenuItem>
+                <MenuItem value="Nurse">Nurse</MenuItem>
+                <MenuItem value="Pharmacist">Pharmacist</MenuItem>
+              </Select>
 
               {/* <TextField
               fullWidth
