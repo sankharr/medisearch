@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const reservationSchema = new Schema({
+const pharmacySchema = new Schema({
+    _id: {
+        type: Object,
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -13,13 +17,14 @@ const reservationSchema = new Schema({
     },
     location: {
         type: String,
-        required: true
+        // required: true,
+        default: "googleMapsLocation"
     },
     city: {
-        type: Number,
+        type: String,
     },
     district: {
-        type: Number,
+        type: String,
         required: true
     },
     phoneNumber: {
@@ -36,8 +41,8 @@ const reservationSchema = new Schema({
     },
     status: {
         type: String,
-        required: true
+        default: 'Active'
     }
 });
 
-module.exports = Reservation = mongoose.model("Reservation", reservationSchema);
+module.exports = Pharmacy = mongoose.model("Pharmacy", pharmacySchema);

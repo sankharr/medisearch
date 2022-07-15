@@ -12,6 +12,8 @@ import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import Requests from './pages/Requests/Requests';
 import CreateRequest from './pages/Requests/CreateRequest';
+import RegisterPharmacy from './pages/Pharmacy/PharmacyRegistration/RegisterPharmacy';
+import PharmacyRequests from './pages/Pharmacy/PharmacyRequests';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,7 @@ export default function Router() {
         { path: 'requests', element: <Requests /> },
         { path: 'createRequest', element: <CreateRequest /> },
         { path: 'settings', element: <Requests /> },
+        { path: 'pharmacyRequsts', element: <PharmacyRequests /> },
       ],
     },
     {
@@ -38,6 +41,7 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard/app" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
+        { path: 'pharmacyRegister', element: <RegisterPharmacy /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

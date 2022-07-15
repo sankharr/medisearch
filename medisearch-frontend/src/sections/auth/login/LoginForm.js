@@ -64,8 +64,12 @@ export default function LoginForm() {
         sessionStorage.setItem("email", res.data.email)
         sessionStorage.setItem("token", res.data.token)
         sessionStorage.setItem("userDocID", res.data.docID)
+        sessionStorage.setItem("userType", res.data.userType)
 
-        navigate("/dashboard", { replace: true });
+        if (res.data.userType == "Patient")
+            navigate("/dashboard", { replace: true });
+        else if (res.data.userType == "Pharmacy")
+            navigate("/pharmacyRequsts", { replace: true });
       })
       .catch((error) => {
           console.log(error);

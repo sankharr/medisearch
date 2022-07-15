@@ -17,6 +17,7 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  TextField,
 } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -40,22 +41,22 @@ import SearchNotFound from "../../components/SearchNotFound";
 import { UserListHead, UserMoreMenu } from "../../sections/@dashboard/user";
 // mock
 import USERLIST from "../../_mock/user";
-import RequestListToolbar from "./RequestListToolbar";
+import RequestListToolbar from "../Requests/RequestListToolbar";
 import axios from "axios";
 import { useEffect } from "react";
-import RequestListHead from "./RequestListHead";
-import AvailablePharmacies from "./AvailablePharmacies";
+import RequestListHead from "../Requests/RequestListHead";
+import AvailablePharmacies from "../Requests/AvailablePharmacies";
+import IconButton from "@mui/material/IconButton";
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: "medicineName", label: "Medicine Name", alignRight: false },
-  { id: "quantity", label: "Quantity", alignRight: false },
-  //   { id: "requestorData", label: "Requestor Details", alignRight: false },
+  { id: "medicineName", label: "Medicine Name", align: "center" },
+  { id: "quantity", label: "Quantity", align: "center" },
   {
-    id: "availablePharmacies",
-    label: "Available Pharmacies",
-    alignRight: false,
+    id: "availability",
+    label: "Availability",
+    align: "center",
   },
   { id: "" },
 ];
@@ -90,7 +91,8 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array,
-      (request) => request.medicineName.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (request) =>
+        request.medicineName.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -102,7 +104,7 @@ const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-export default function Requests() {
+export default function PharmacyRequests() {
   const [requestData, setRequestData] = useState([]);
 
   useEffect(() => {
@@ -222,7 +224,7 @@ export default function Requests() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, paddingX: 3}}>
+            <TableContainer sx={{ minWidth: 800, paddingX: 3 }}>
               <Table>
                 <RequestListHead
                   order={order}
@@ -266,11 +268,11 @@ export default function Requests() {
                               }
                             />
                           </TableCell> */}
-                          <TableCell component="th" scope="row" padding="5">
+                          <TableCell component="th" scope="row">
                             <Stack
                               direction="row"
                               alignItems="center"
-                              spacing={2}
+                              //   spacing={2}
                             >
                               {/* <Avatar alt={medicineName} src={avatarUrl} /> */}
                               <Typography variant="subtitle2" noWrap>
@@ -278,39 +280,22 @@ export default function Requests() {
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{quantity}</TableCell>
-                          <TableCell align="left">
-                            <div>
-                              <Button
-                                variant="outlined"
-                                onClick={handleClickOpen}
-                              >
-                                Open alert dialog
-                              </Button>
-                              <Dialog
-                                open={open}
-                                onClose={handleClose}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                              >
-                                <DialogTitle id="alert-dialog-title">
-                                  Available Pharmacies
-                                </DialogTitle>
-                                <DialogContent>
-                                  <DialogContentText id="alert-dialog-description">
-                                    <AvailablePharmacies />
-                                  </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                  <Button onClick={handleClose}>
-                                    Disagree
-                                  </Button>
-                                  <Button onClick={handleClose} autoFocus>
-                                    Agree
-                                  </Button>
-                                </DialogActions>
-                              </Dialog>
-                            </div>
+                          <TableCell align="center">{quantity}</TableCell>
+                          <TableCell align="center">
+                            <TextField
+                              id="amount"
+                              label="Amount"
+                              variant="outlined"
+                              size="small"
+                              type="number"
+                              sx={{ width: 100 }}
+                            />
+                            <IconButton color="success">
+                              <Iconify icon="charm:tick" />
+                            </IconButton>
+                            <IconButton color="error">
+                              <Iconify icon="charm:cross" />
+                            </IconButton>
                           </TableCell>
                           {/* <TableCell align="left">{availablePharmacies}</TableCell> */}
                           {/* <TableCell align="left">
@@ -356,7 +341,7 @@ export default function Requests() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={requestData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
