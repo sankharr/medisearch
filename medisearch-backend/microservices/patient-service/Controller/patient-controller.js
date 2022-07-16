@@ -1,10 +1,12 @@
 const Patient = require("../Model/Patient");
 const amqp = require("amqplib");
+const dbConnection = require("../dbConfig");
 
 var channel, connection;
 
 // route to get all patients
 const getAllPatients = async (req, res) => {
+  await dbConnection();
   let patients;
   try {
     patients = await Patient.find();
@@ -21,6 +23,7 @@ const getAllPatients = async (req, res) => {
 
 //  route to get patient by id
 const getPatient = async (req, res) => {
+  await dbConnection();
   const id = req.params.id;
   let patient;
   try {
@@ -107,5 +110,10 @@ const gettingDataForRequest = async (data) => {
   return patient;
 };
 
+const testAPI = async (req, res) => {
+  return res.send("<h3>Patient-Service Test API works!!</h3>");
+};
+
 exports.getAllPatients = getAllPatients;
 exports.getPatient = getPatient;
+exports.testAPI = testAPI;

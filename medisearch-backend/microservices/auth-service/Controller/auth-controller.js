@@ -1,7 +1,9 @@
 const User = require("../Model/User");
 const jwt = require("jsonwebtoken");
+const dbConnection = require("../dbConfig");
 
 const userRegister = async (req, res) => {
+  await dbConnection();
   const userExists = await User.findOne({ email: req.body.email });
   if (userExists) {
     return res.json({ message: "User already exists" });
@@ -68,6 +70,8 @@ const userRegister = async (req, res) => {
 };
 
 const userLogin = async (req, res) => {
+  //   res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+  await dbConnection();
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -89,5 +93,29 @@ const userLogin = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  await dbConnection();
+  //   console.log("getAllUsers --end")
+  let users;
+  try {
+    users = await User.find();
+  } catch (error) {
+    console.log(err);
+  }
+
+  if (!users) {
+    return res.status(404).json({ message: "No users found" });
+  }
+  // console.log("products - ",products)
+  return res.status(200).json({ users });
+};
+
+const testAPI = async (req, res) => {
+//   await dbConnection();
+  return res.send("<h3>Test API works!!</h3>");
+};
+
 exports.userRegister = userRegister;
 exports.userLogin = userLogin;
+exports.testAPI = testAPI;
+exports.getAllUsers = getAllUsers;

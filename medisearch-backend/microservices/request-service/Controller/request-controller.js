@@ -1,7 +1,9 @@
 const Request = require("../Model/Request");
+const dbConnection = require("../dbConfig");
 
 // route to get all requests
 const getAllRequests = async (req, res) => {
+  await dbConnection();
   let requests;
   try {
     requests = await Request.find();
@@ -18,6 +20,7 @@ const getAllRequests = async (req, res) => {
 
 //  route to get requests by id
 const getRequest = async (req, res) => {
+  await dbConnection();
   const id = req.params.id;
   let request;
   try {
@@ -34,6 +37,7 @@ const getRequest = async (req, res) => {
 
 // function to create a request
 const createRequest = async (req, res) => {
+  await dbConnection();
   let requestedData;
   const {
     requestorName,
@@ -75,6 +79,11 @@ const createRequest = async (req, res) => {
   });
 };
 
+const testAPI = async (req, res) => {
+  return res.send("<h3>Request-Service Test API works!!</h3>");
+};
+
 exports.getAllRequests = getAllRequests;
 exports.getRequest = getRequest;
 exports.createRequest = createRequest;
+exports.testAPI = testAPI;

@@ -1,49 +1,63 @@
-import * as Yup from 'yup';
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useFormik, Form, FormikProvider } from 'formik';
+import * as Yup from "yup";
+import { useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useFormik, Form, FormikProvider } from "formik";
 // material
-import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import {
+  Link,
+  Stack,
+  Checkbox,
+  TextField,
+  IconButton,
+  InputAdornment,
+  FormControlLabel,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // component
-import Iconify from '../../../components/Iconify';
+import Iconify from "../../../components/Iconify";
 
 import axios from "axios";
 
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { updateLogin } from "../../../store/reducers/authdata";
 
 // ----------------------------------------------------------------------
 
-const URL = "http://localhost:4040/auth/login";
+// const URL = "http://localhost:4040/auth/login";
+// const URL = 'https://giix5vwy99.execute-api.us-east-1.amazonaws.com/auth/login';
 
 export default function LoginForm() {
+  const URL = process.env.REACT_APP_LOGIN_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log("LoginForm URL => ", URL);
 
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string()
+      .email("Email must be a valid email address")
+      .required("Email is required"),
+    password: Yup.string().required("Password is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       remember: true,
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-        console.log("form data - ", formik.values)
-        login(formik.values)
-    //   navigate('/dashboard', { replace: true });
+      console.log("form data - ", formik.values);
+      login(formik.values);
+      //   navigate('/dashboard', { replace: true });
     },
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
+    formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -55,24 +69,31 @@ export default function LoginForm() {
       .then((res) => {
         console.log(res.data);
         console.log("Successfully logged in");
-        dispatch(updateLogin({name: res.data.name, email: res.data.email, token: res.data.token, userDocID: res.data.docID }))
+        dispatch(
+          updateLogin({
+            name: res.data.name,
+            email: res.data.email,
+            token: res.data.token,
+            userDocID: res.data.docID,
+          })
+        );
         // document.cookie = `name=${res.data.name};`;
         // document.cookie = `email=${res.data.email};`;
         // document.cookie = `token=${res.data.token};`;
         // document.cookie = `userDocID=${res.data.docID};`;
-        sessionStorage.setItem("name", res.data.name)
-        sessionStorage.setItem("email", res.data.email)
-        sessionStorage.setItem("token", res.data.token)
-        sessionStorage.setItem("userDocID", res.data.docID)
-        sessionStorage.setItem("userType", res.data.userType)
+        sessionStorage.setItem("name", res.data.name);
+        sessionStorage.setItem("email", res.data.email);
+        sessionStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("userDocID", res.data.docID);
+        sessionStorage.setItem("userType", res.data.userType);
 
         if (res.data.userType == "Patient")
-            navigate("/dashboard", { replace: true });
+          navigate("/dashboard", { replace: true });
         else if (res.data.userType == "Pharmacy")
-            navigate("/pharmacyRequsts", { replace: true });
+          navigate("/pharmacyRequsts", { replace: true });
       })
       .catch((error) => {
-          console.log(error);
+        console.log(error);
         //   setSubmitCompleted(true);
         //   setIsError(true);
       });
@@ -87,7 +108,7 @@ export default function LoginForm() {
             autoComplete="username"
             type="email"
             label="Email address"
-            {...getFieldProps('email')}
+            {...getFieldProps("email")}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
@@ -95,14 +116,16 @@ export default function LoginForm() {
           <TextField
             fullWidth
             autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             label="Password"
-            {...getFieldProps('password')}
+            {...getFieldProps("password")}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={handleShowPassword} edge="end">
-                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                    <Iconify
+                      icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
+                    />
                   </IconButton>
                 </InputAdornment>
               ),
@@ -112,18 +135,39 @@ export default function LoginForm() {
           />
         </Stack>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ my: 2 }}
+        >
           <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+            control={
+              <Checkbox
+                {...getFieldProps("remember")}
+                checked={values.remember}
+              />
+            }
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
+          <Link
+            component={RouterLink}
+            variant="subtitle2"
+            to="#"
+            underline="hover"
+          >
             Forgot password?
           </Link>
         </Stack>
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
           Login
         </LoadingButton>
       </Form>

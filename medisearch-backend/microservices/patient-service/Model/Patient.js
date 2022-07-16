@@ -37,4 +37,5 @@ patientSchema = new Schema({
     }
 });
 
-module.exports = Patient = mongoose.model("Patient", patientSchema);
+// module.exports = Patient = mongoose.model("Patient", patientSchema);
+module.exports = mongoose.models.Patient || mongoose.model('Patient', patientSchema);

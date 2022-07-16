@@ -50,8 +50,10 @@ const ContentStyle = styled("div")(({ theme }) => ({
   padding: theme.spacing(5, 0),
 }));
 
-const Request_URL = "http://localhost:6060/requests";
-const Patient_URL = "http://localhost:5050/patient/";
+// const Request_URL = "http://localhost:6060/requests";
+// const Patient_URL = "http://localhost:5050/patient/";
+const Patient_URL = "https://kkf3skvbe4.execute-api.us-east-1.amazonaws.com/patient/";
+const Request_URL = "https://lrp1i6l0l1.execute-api.us-east-1.amazonaws.com/requests";
 
 export default function CreateRequest() {
   const navigate = useNavigate();

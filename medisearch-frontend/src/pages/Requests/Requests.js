@@ -96,7 +96,8 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const URL = "http://localhost:6060/requests";
+// const URL = "http://localhost:6060/requests";
+const URL = "https://lrp1i6l0l1.execute-api.us-east-1.amazonaws.com/requests";
 
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);

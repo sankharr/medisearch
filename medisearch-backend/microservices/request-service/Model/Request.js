@@ -30,4 +30,5 @@ requestSchema = new Schema({
     }
 });
 
-module.exports = Request = mongoose.model("Request", requestSchema);
+// module.exports = Request = mongoose.model("Request", requestSchema);
+module.exports = mongoose.models.Request || mongoose.model('Request', requestSchema);

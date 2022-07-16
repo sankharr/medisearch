@@ -1,17 +1,15 @@
+const serverless = require("serverless-http");
 const express = require("express");
-const mongoose = require("mongoose");
-var cors = require("cors");
+const app = express();
+const cors = require("cors");
+app.use(cors());
 const dotenv = require("dotenv");
-const PORT = process.env.PORT_ONE || 6060;
 const path = require("path");
 const amqp = require("amqplib");
 const requestRouter = require("./Routes/request-routes")
-var order;
 
 var channel, connection;
 
-const app = express();
-app.use(cors());
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 app.use(express.json());
@@ -31,18 +29,5 @@ connect().catch((err) =>
 
 app.use("/requests", requestRouter);
 
-// connecting to MongoDB
-mongoose.connect(
-  process.env.CONNECTION_URL_REQUEST,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log(`Request-Service DB Connected`);
-  }
-);
+module.exports.handler = serverless(app);
 
-app.listen(PORT, () => {
-  console.log(`Request-Service at ${PORT}`);
-});

@@ -17,7 +17,8 @@ import Select from "@mui/material/Select";
 
 // ----------------------------------------------------------------------
 
-const URL = "http://localhost:4040/auth/register";
+// const URL = "http://localhost:4040/auth/register";
+const URL = "https://giix5vwy99.execute-api.us-east-1.amazonaws.com/auth/register"
 
 export default function RegisterForm() {
   const navigate = useNavigate();
