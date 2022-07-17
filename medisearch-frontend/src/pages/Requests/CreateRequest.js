@@ -52,10 +52,10 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 // const Request_URL = "http://localhost:6060/requests";
 // const Patient_URL = "http://localhost:5050/patient/";
-const Patient_URL = "https://kkf3skvbe4.execute-api.us-east-1.amazonaws.com/patient/";
-const Request_URL = "https://lrp1i6l0l1.execute-api.us-east-1.amazonaws.com/requests";
 
 export default function CreateRequest() {
+  const Patient_URL = process.env.REACT_APP_REQUEST_CREATE_PATIENT_URL;
+  const Request_URL = process.env.REACT_APP_REQUEST_CREATE_REQUEST_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const medNameField = useRef(null);
@@ -121,7 +121,7 @@ export default function CreateRequest() {
     axios
       .get(Patient_URL + requestorDocID)
       .then(async (res) => {
-        console.log("patient Data - ",res.data);
+        console.log("patient Data - ", res.data);
         await axios
           .post(Request_URL, {
             requestorName,
@@ -141,25 +141,25 @@ export default function CreateRequest() {
         console.log(error);
       });
 
-//     medicineList.forEach((item) => {
-//       const newRequestObject = {
-//         requestorName,
-//         requestorDocID,
-//         email,
-//         medicineName: item.medicineName,
-//         quantity: item.quantity,
-//       };
-//       axios
-//         .post(URL, newRequestObject)
-//         .then((res) => {
-//           console.log(res.data);
-//           console.log("Successfully created the request - ", item.name);
-//           setMedicineList([]);
-//         })
-//         .catch((error) => {
-//           console.log(error);
-//         });
-//     });
+    //     medicineList.forEach((item) => {
+    //       const newRequestObject = {
+    //         requestorName,
+    //         requestorDocID,
+    //         email,
+    //         medicineName: item.medicineName,
+    //         quantity: item.quantity,
+    //       };
+    //       axios
+    //         .post(URL, newRequestObject)
+    //         .then((res) => {
+    //           console.log(res.data);
+    //           console.log("Successfully created the request - ", item.name);
+    //           setMedicineList([]);
+    //         })
+    //         .catch((error) => {
+    //           console.log(error);
+    //         });
+    //     });
   };
 
   return (

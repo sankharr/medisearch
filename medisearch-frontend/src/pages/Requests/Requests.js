@@ -90,20 +90,19 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array,
-      (request) => request.medicineName.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (request) =>
+        request.medicineName.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
 // const URL = "http://localhost:6060/requests";
-const URL = "https://lrp1i6l0l1.execute-api.us-east-1.amazonaws.com/requests";
 
-const fetchHandler = async () => {
-  return await axios.get(URL).then((res) => res.data);
-};
+
 
 export default function Requests() {
+  const URL = process.env.REACT_APP_REQUEST_RETRIEVE_URL;
   const [requestData, setRequestData] = useState([]);
 
   useEffect(() => {
@@ -127,6 +126,10 @@ export default function Requests() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [open, setOpen] = useState(false);
+
+  const fetchHandler = async () => {
+    return await axios.get(URL).then((res) => res.data);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -223,7 +226,7 @@ export default function Requests() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, paddingX: 3}}>
+            <TableContainer sx={{ minWidth: 800, paddingX: 3 }}>
               <Table>
                 <RequestListHead
                   order={order}

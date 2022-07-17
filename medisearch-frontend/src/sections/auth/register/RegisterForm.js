@@ -18,9 +18,9 @@ import Select from "@mui/material/Select";
 // ----------------------------------------------------------------------
 
 // const URL = "http://localhost:4040/auth/register";
-const URL = "https://giix5vwy99.execute-api.us-east-1.amazonaws.com/auth/register"
 
 export default function RegisterForm() {
+  const URL = process.env.REACT_APP_REGISTER_URL;
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +39,7 @@ export default function RegisterForm() {
       city: formObject.city,
       district: formObject.district,
       password: formObject.password,
-      userType: formObject.userType
+      userType: formObject.userType,
     };
 
     axios
