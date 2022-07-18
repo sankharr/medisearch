@@ -71,6 +71,10 @@ functions:
           path: /patient/{id}
           method: get
 
+      - httpApi:
+          path: /patient
+          method: post
+
     environment:
       CONNECTION_URL_PATIENT: mongodb+srv://medisearchadmin:6ws1Hpz32PFhutwI@cluster0.6toin.mongodb.net/devDatabasePatient?retryWrites=true&w=majority
 plugins:

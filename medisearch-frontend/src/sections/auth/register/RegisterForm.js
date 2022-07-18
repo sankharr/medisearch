@@ -20,7 +20,8 @@ import Select from "@mui/material/Select";
 // const URL = "http://localhost:4040/auth/register";
 
 export default function RegisterForm() {
-  const URL = process.env.REACT_APP_REGISTER_URL;
+  const Auth_URL = process.env.REACT_APP_REGISTER_URL;
+  const Patient_URL = "http://localhost:5050/patient";
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -39,19 +40,27 @@ export default function RegisterForm() {
       city: formObject.city,
       district: formObject.district,
       password: formObject.password,
-      userType: formObject.userType,
+      userType: "Patient",
     };
 
     axios
-      .post(URL, dataObject)
+      .post(Auth_URL, dataObject)
       .then((res) => {
-        console.log(res.data);
-        console.log("Registration successfully completed");
+        // console.log("Auth doc created - ",res.data);
+        dataObject = { ...dataObject, documentID: res.data._id };
+
         // setSubmitCompleted(true);
         // setIsError(false);
         // setTimeout(() => navigate('/login'),2000)
-        navigate("/login");
+        // navigate("/login");
         // console.log("is error state (then) => ", isError);
+      })
+      .then(() => {
+        console.log("Auth doc created - ", dataObject);
+        axios.post(Patient_URL, dataObject).then((res) => {
+          console.log("Registration successfully completed");
+          navigate("/login");
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -76,12 +85,13 @@ export default function RegisterForm() {
         district: "",
         email: "",
         password: "",
-        userType: "Patient",
+        confirmPassword: "",
+        // userType: "Patient",
       }}
       validationSchema={Yup.object().shape({
         firstname: Yup.string().max(255).required("First Name is required"),
         lastname: Yup.string().max(255).required("Last Name is required"),
-        userType: Yup.string().max(255).required("Last Name is required"),
+        // userType: Yup.string().max(255).required("User Type is required"),
         phoneNumber: Yup.number().required("Phone Number is required"),
         city: Yup.string().max(255).required("City is required"),
         district: Yup.string().max(255).required("District is required"),
@@ -90,6 +100,10 @@ export default function RegisterForm() {
           .max(255)
           .required("Email is required"),
         password: Yup.string().max(255).required("Password is required"),
+        confirmPassword: Yup.string()
+          .label("confirm password")
+          .required()
+          .oneOf([Yup.ref("password"), null], "Passwords must match"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -184,31 +198,36 @@ export default function RegisterForm() {
                 helperText={touched.password && errors.password}
               />
 
-              {/* <TextField
-              fullWidth
-              autoComplete="retype-password"
-              type={showPassword ? "text" : "password"}
-              label="Re-type Password"
-              {...getFieldProps("Re-type Password")}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      <Iconify
-                        icon={
-                          showPassword ? "eva:eye-fill" : "eva:eye-off-fill"
-                        }
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              error={Boolean(touched.retype_password && errors.retype_password)}
-              helperText={touched.retype_password && errors.retype_password}
-            /> */}
+              <TextField
+                // fullWidth
+                type={showPassword ? "text" : "password"}
+                label="Confirm Password"
+                id="password-signup"
+                value={values.confirmPassword}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                name="confirmPassword"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        <Iconify
+                          icon={
+                            showPassword ? "eva:eye-fill" : "eva:eye-off-fill"
+                          }
+                        />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                error={Boolean(
+                  touched.confirmPassword && errors.confirmPassword
+                )}
+                helperText={touched.confirmPassword && errors.confirmPassword}
+              />
             </Stack>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <TextField
@@ -237,7 +256,7 @@ export default function RegisterForm() {
             </Stack>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <TextField
-                // fullWidth
+                fullWidth
                 label="Phone Number"
                 id="phoneNumber-signup"
                 value={values.phoneNumber}
@@ -248,7 +267,7 @@ export default function RegisterForm() {
                 helperText={touched.phoneNumber && errors.phoneNumber}
               />
               {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-              <Select
+              {/* <Select
                 // labelId="demo-simple-select-label"
                 id="userType"
                 name="userType"
@@ -262,7 +281,7 @@ export default function RegisterForm() {
                 <MenuItem value="Patient">Patient</MenuItem>
                 <MenuItem value="Nurse">Nurse</MenuItem>
                 <MenuItem value="Pharmacist">Pharmacist</MenuItem>
-              </Select>
+              </Select> */}
 
               {/* <TextField
               fullWidth

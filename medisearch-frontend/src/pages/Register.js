@@ -90,22 +90,22 @@ export default function Register() {
 
         <Container>
           <ContentStyle>
-            <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
+            <Typography variant="h4" marginBottom={6}>
+              Get registered here.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
+            {/* <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography> */}
 
-            <AuthSocial />
+            {/* <AuthSocial /> */}
 
             <RegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to Minimal&nbsp;
+              By registering, I agree to MediSearch&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
               </Link>
-              {''}and{''}
+              {' '}and{' '}
               <Link underline="always" color="text.primary" href="#">
                 Privacy Policy
               </Link>

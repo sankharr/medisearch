@@ -222,7 +222,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/auth-service/dev/1657962089438-2022-07-16T09:01:29.438Z/auth-service.zip"
+                "S3Key": "serverless/auth-service/dev/1658026664225-2022-07-17T02:57:44.225Z/auth-service.zip"
               },
               "Handler": "s_authService.handler",
               "Runtime": "nodejs12.x",
@@ -245,14 +245,14 @@
               "AuthServiceLogGroup"
             ]
           },
-          "AuthServiceLambdaVersiongRadMYnwz7mAVwAiGR6OAV2YBWX3YZibniDppOypLDw": {
+          "AuthServiceLambdaVersion0psIs5PP3WfHQGrcSUh3iwRHB8KtyBrfXzCOwuDis0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthServiceLambdaFunction"
               },
-              "CodeSha256": "7ZBjWYSmG1S6m0GGq+9CTyDHLQZM2cUpXXFD+2KWVPA="
+              "CodeSha256": "CLzJGfD35LkBZ6jVG9KwpvvDI1HivHqSIY6thGzJlNU="
             }
           },
           "HttpApi": {
@@ -489,7 +489,7 @@
           "AuthServiceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthServiceLambdaVersiongRadMYnwz7mAVwAiGR6OAV2YBWX3YZibniDppOypLDw"
+              "Ref": "AuthServiceLambdaVersion0psIs5PP3WfHQGrcSUh3iwRHB8KtyBrfXzCOwuDis0"
             },
             "Export": {
               "Name": "sls-auth-service-dev-AuthServiceLambdaFunctionQualifiedArn"
@@ -670,7 +670,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AuthServiceLambdaVersiongRadMYnwz7mAVwAiGR6OAV2YBWX3YZibniDppOypLDw"
+        "versionLogicalId": "AuthServiceLambdaVersion0psIs5PP3WfHQGrcSUh3iwRHB8KtyBrfXzCOwuDis0"
       }
     },
     "configValidationMode": "warn",
@@ -700,7 +700,7 @@
     "artifact": "/Users/sankharr/Documents/Dev/medisearch/medisearch-backend/microservices/auth-service/.serverless/auth-service.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/auth-service/dev/1657962089438-2022-07-16T09:01:29.438Z",
+    "artifactDirectoryName": "serverless/auth-service/dev/1658026664225-2022-07-17T02:57:44.225Z",
     "artifact": "auth-service.zip"
   }
 }

@@ -25,13 +25,11 @@ import { updateLogin } from "../../../store/reducers/authdata";
 // ----------------------------------------------------------------------
 
 // const URL = "http://localhost:4040/auth/login";
-// const URL = 'https://giix5vwy99.execute-api.us-east-1.amazonaws.com/auth/login';
 
 export default function LoginForm() {
   const URL = process.env.REACT_APP_LOGIN_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("LoginForm URL => ", URL);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -88,7 +86,7 @@ export default function LoginForm() {
         sessionStorage.setItem("userType", res.data.userType);
 
         if (res.data.userType == "Patient")
-          navigate("/dashboard", { replace: true });
+          navigate("/requests", { replace: true });
         else if (res.data.userType == "Pharmacy")
           navigate("/pharmacyRequsts", { replace: true });
       })

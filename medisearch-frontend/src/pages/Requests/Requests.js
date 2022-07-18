@@ -205,7 +205,7 @@ export default function Requests() {
           justifyContent="space-between"
           mb={5}
         >
-          <Typography variant="h4" gutterBottom>
+          <Typography data-testid="mainTitle" variant="h4" gutterBottom>
             Requests
           </Typography>
           <Button
@@ -289,7 +289,7 @@ export default function Requests() {
                                 variant="outlined"
                                 onClick={handleClickOpen}
                               >
-                                Open alert dialog
+                                List of Pharmacies
                               </Button>
                               <Dialog
                                 open={open}
@@ -306,11 +306,11 @@ export default function Requests() {
                                   </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                  <Button onClick={handleClose}>
+                                  {/* <Button onClick={handleClose}>
                                     Disagree
-                                  </Button>
-                                  <Button onClick={handleClose} autoFocus>
-                                    Agree
+                                  </Button> */}
+                                  <Button onClick={handleClose}>
+                                    Close
                                   </Button>
                                 </DialogActions>
                               </Dialog>
@@ -360,7 +360,7 @@ export default function Requests() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={requestData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

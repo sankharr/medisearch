@@ -4,6 +4,6 @@ const patientController = require("../Controller/patient-controller");
 
 router.get("/", patientController.getAllPatients);
 router.get("/:id", patientController.getPatient);
-// router.get("/test", patientController.testAPI);
+router.post("/", patientController.createPatient);
 
 module.exports = router;

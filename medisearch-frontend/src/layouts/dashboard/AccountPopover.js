@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 // @mui
 import { alpha } from "@mui/material/styles";
 import {
@@ -53,6 +53,7 @@ export default function AccountPopover() {
   //   const { name, email, token, userDocID } = userData;
 
   const [open, setOpen] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(async () => {
     // cookieData = document.cookie;
@@ -82,6 +83,10 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  const handleLogout = () => {
+    navigate("/login", {replace: true});
+  }
 
   return (
     <>
@@ -147,7 +152,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: "dashed" }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </MenuPopover>

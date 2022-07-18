@@ -23,7 +23,7 @@ export default function Router() {
       path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/requests" /> },
+        { path: '/', element: <Navigate to="/login" /> },
         { path: 'dashboard', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
@@ -38,7 +38,7 @@ export default function Router() {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
+        { path: '/', element: <Navigate to="/login" /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: 'pharmacyRegister', element: <RegisterPharmacy /> },
