@@ -207,7 +207,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/patient-service/dev/1657991403364-2022-07-16T17:10:03.364Z/patient-service.zip"
+          "S3Key": "serverless/patient-service/dev/1658135461970-2022-07-18T09:11:01.970Z/patient-service.zip"
         },
         "Handler": "s_authService.handler",
         "Runtime": "nodejs12.x",
@@ -230,14 +230,14 @@
         "AuthServiceLogGroup"
       ]
     },
-    "AuthServiceLambdaVersionS5DVLinIyQlxUzGJmIyIK6zMGOYP58XyrgUaM15A0": {
+    "AuthServiceLambdaVersion3a4efKkq2cjoy7BPZwrOdiMcQtNOL6T2bIu6P5l9A": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AuthServiceLambdaFunction"
         },
-        "CodeSha256": "4aKpD3oS6hlcONeZDdlz+PgRloCqK5LUwzpFVTnQ0hw="
+        "CodeSha256": "ejddNe+0UZaqBY6JSL4N6xjwjVm6vtutOFEzWGzNhHI="
       }
     },
     "HttpApi": {
@@ -257,7 +257,8 @@
           ],
           "AllowMethods": [
             "OPTIONS",
-            "GET"
+            "GET",
+            "POST"
           ],
           "AllowOrigins": [
             "*"
@@ -390,6 +391,27 @@
       },
       "DependsOn": "HttpApiIntegrationAuthService"
     },
+    "HttpApiRoutePostPatient": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "POST /patient",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "HttpApiIntegrationAuthService"
+              }
+            ]
+          ]
+        }
+      },
+      "DependsOn": "HttpApiIntegrationAuthService"
+    },
     "CWLSubFilterAuthServiceLogGroupUsEast1": {
       "Type": "AWS::Logs::SubscriptionFilter",
       "Properties": {
@@ -434,7 +456,7 @@
     "AuthServiceLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AuthServiceLambdaVersionS5DVLinIyQlxUzGJmIyIK6zMGOYP58XyrgUaM15A0"
+        "Ref": "AuthServiceLambdaVersion3a4efKkq2cjoy7BPZwrOdiMcQtNOL6T2bIu6P5l9A"
       },
       "Export": {
         "Name": "sls-patient-service-dev-AuthServiceLambdaFunctionQualifiedArn"

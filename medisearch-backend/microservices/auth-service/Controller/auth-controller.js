@@ -2,6 +2,7 @@ const User = require("../Model/User");
 const jwt = require("jsonwebtoken");
 const dbConnection = require("../dbConfig");
 
+// registering the user
 const userRegister = async (req, res) => {
   await dbConnection();
   const userExists = await User.findOne({ email: req.body.email });
@@ -22,6 +23,8 @@ const userRegister = async (req, res) => {
   }
 };
 
+
+// user login
 const userLogin = async (req, res) => {
   await dbConnection();
   const { email, password } = req.body;
@@ -45,6 +48,8 @@ const userLogin = async (req, res) => {
   }
 };
 
+
+// getting all the user data
 const getAllUsers = async (req, res) => {
   await dbConnection();
   let users;

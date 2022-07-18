@@ -20,11 +20,14 @@ import Select from "@mui/material/Select";
 // const URL = "http://localhost:4040/auth/register";
 
 export default function RegisterForm() {
-  const Auth_URL = process.env.REACT_APP_REGISTER_URL;
-  const Patient_URL = "http://localhost:5050/patient";
+  const Auth_URL = process.env.REACT_APP_REGISTER_AUTH_URL;
+    const Patient_URL = process.env.REACT_APP_REGISTER_PATIENT_URL;
+//   const Patient_URL = "http://localhost:5050/patient";
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [age, setAge] = useState("");
 
@@ -46,14 +49,7 @@ export default function RegisterForm() {
     axios
       .post(Auth_URL, dataObject)
       .then((res) => {
-        // console.log("Auth doc created - ",res.data);
         dataObject = { ...dataObject, documentID: res.data._id };
-
-        // setSubmitCompleted(true);
-        // setIsError(false);
-        // setTimeout(() => navigate('/login'),2000)
-        // navigate("/login");
-        // console.log("is error state (then) => ", isError);
       })
       .then(() => {
         console.log("Auth doc created - ", dataObject);
@@ -64,16 +60,8 @@ export default function RegisterForm() {
       })
       .catch((error) => {
         console.log(error);
-        // setSubmitCompleted(true);
-        // setIsError(true);
-        // console.log("is error state (catch) => ", isError);
       });
-
-    // Redirect to Student List
-    // navigate("/currentReservations");
   };
-
-  //   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
     <Formik
@@ -86,12 +74,10 @@ export default function RegisterForm() {
         email: "",
         password: "",
         confirmPassword: "",
-        // userType: "Patient",
       }}
       validationSchema={Yup.object().shape({
         firstname: Yup.string().max(255).required("First Name is required"),
         lastname: Yup.string().max(255).required("Last Name is required"),
-        // userType: Yup.string().max(255).required("User Type is required"),
         phoneNumber: Yup.number().required("Phone Number is required"),
         city: Yup.string().max(255).required("City is required"),
         district: Yup.string().max(255).required("District is required"),
@@ -200,7 +186,7 @@ export default function RegisterForm() {
 
               <TextField
                 // fullWidth
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 label="Confirm Password"
                 id="password-signup"
                 value={values.confirmPassword}
@@ -212,7 +198,7 @@ export default function RegisterForm() {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={() => setShowPassword((prev) => !prev)}
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
                       >
                         <Iconify
                           icon={
@@ -266,30 +252,6 @@ export default function RegisterForm() {
                 error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                 helperText={touched.phoneNumber && errors.phoneNumber}
               />
-              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-              {/* <Select
-                // labelId="demo-simple-select-label"
-                id="userType"
-                name="userType"
-                // label=""
-                value={values.userType}
-                placeholder="User Type"
-                label="User Type"
-                onChange={handleChange}
-                defaultChecked
-              >
-                <MenuItem value="Patient">Patient</MenuItem>
-                <MenuItem value="Nurse">Nurse</MenuItem>
-                <MenuItem value="Pharmacist">Pharmacist</MenuItem>
-              </Select> */}
-
-              {/* <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps("lastName")}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
-            /> */}
             </Stack>
             <LoadingButton
               fullWidth

@@ -1,5 +1,4 @@
 import { filter } from "lodash";
-import { sentenceCase } from "change-case";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 // material
@@ -18,12 +17,6 @@ import {
   TableContainer,
   TablePagination,
 } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -37,7 +30,7 @@ import Label from "../../components/Label";
 import Scrollbar from "../../components/Scrollbar";
 import Iconify from "../../components/Iconify";
 import SearchNotFound from "../../components/SearchNotFound";
-import { UserListHead, UserMoreMenu } from "../../sections/@dashboard/user";
+import { UserMoreMenu } from "../../sections/@dashboard/user";
 // mock
 import USERLIST from "../../_mock/user";
 import RequestListToolbar from "./RequestListToolbar";
@@ -49,13 +42,12 @@ import AvailablePharmacies from "./AvailablePharmacies";
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: "medicineName", label: "Medicine Name", alignRight: false },
-  { id: "quantity", label: "Quantity", alignRight: false },
-  //   { id: "requestorData", label: "Requestor Details", alignRight: false },
+  { id: "medicineName", label: "Medicine Name", align: 'left' },
+  { id: "quantity", label: "Quantity", align: 'center' },
   {
     id: "availablePharmacies",
     label: "Available Pharmacies",
-    alignRight: false,
+    align: 'center',
   },
   { id: "" },
 ];
@@ -79,9 +71,7 @@ function getComparator(order, orderBy) {
 }
 
 function applySortFilter(array, comparator, query) {
-  console.log("applySortFilter array => ", array);
   const stabilizedThis = array.map((el, index) => [el, index]);
-  console.log("applySortFilter stabilizedThis => ", stabilizedThis);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -262,14 +252,6 @@ export default function Requests() {
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
-                          {/* <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) =>
-                                handleClick(event, medicineName)
-                              }
-                            />
-                          </TableCell> */}
                           <TableCell component="th" scope="row" padding="5">
                             <Stack
                               direction="row"
@@ -282,8 +264,8 @@ export default function Requests() {
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{quantity}</TableCell>
-                          <TableCell align="left">
+                          <TableCell align="center">{quantity}</TableCell>
+                          <TableCell align="center">
                             <div>
                               <Button
                                 variant="outlined"
@@ -316,20 +298,6 @@ export default function Requests() {
                               </Dialog>
                             </div>
                           </TableCell>
-                          {/* <TableCell align="left">{availablePharmacies}</TableCell> */}
-                          {/* <TableCell align="left">
-                            {isVerified ? "Yes" : "No"}
-                          </TableCell>
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={
-                                (status === "banned" && "error") || "success"
-                              }
-                            >
-                              {sentenceCase(status)}
-                            </Label>
-                          </TableCell> */}
 
                           <TableCell align="right">
                             <UserMoreMenu />

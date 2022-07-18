@@ -38,45 +38,6 @@ const getPatient = async (req, res) => {
   return res.status(200).json({ patient });
 };
 
-// function to create the Product queue
-// async function connect(queueName) {
-//   const amqpServer = "amqp://localhost:5672";
-//   connection = await amqp.connect(amqpServer);
-//   channel = await connection.createChannel();
-//   await channel.assertQueue(queueName);
-// }
-// // creating the product queue
-// connect("PATIENT")
-//   .then(() => {
-//     channel.consume("PATIENT", (data) => {
-//       console.log("Consuming from Patient service");
-//       console.log(
-//         "recieved data in PatientService - ",
-//         JSON.parse(data.content)
-//       );
-//       const requestType = JSON.parse(data.content).requestType;
-//       if (requestType === "createPatient") {
-//         const newPatient = createPatient(JSON.parse(data.content));
-//         channel.sendToQueue(
-//           "AUTH",
-//           Buffer.from(JSON.stringify({ newPatient }))
-//         );
-//         console.log("sent to AUTH queue from Patient");
-//         channel.ack(data);
-//         console.log("acknowledged from Patient");
-//       } else if (requestType === "dataForRequest") {
-//         gettingDataForRequest(JSON.parse(data.content)).then((res) => {
-//           console.log("dataForRequest => ", res);
-//           channel.sendToQueue("REQUEST", Buffer.from(JSON.stringify({ res })));
-//           console.log("sent Data to REQUEST queue from Patient");
-//           channel.ack(data);
-//           console.log("acknowledged from Patient");
-//         });
-//       }
-//     });
-//   })
-//   .catch((err) => console.log("error from amqp Connect - ", err));
-
 const createPatient = async (req, res) => {
   await dbConnection();
   console.log("req.body => ", req.body);
@@ -88,11 +49,10 @@ const createPatient = async (req, res) => {
     city: req.body.city,
     district: req.body.district,
   });
-  newPatient.save((err, res) => {
+  await newPatient.save((err, res) => {
     if (err) console.log("error occured when creating patient doc - ", err);
     else {
       console.log("Successfully created patientDoc from patient-service");
-      
     }
   });
   return res.json(newPatient);

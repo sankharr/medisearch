@@ -260,14 +260,6 @@ export default function PharmacyRequests() {
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
-                          {/* <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) =>
-                                handleClick(event, medicineName)
-                              }
-                            />
-                          </TableCell> */}
                           <TableCell component="th" scope="row">
                             <Stack
                               direction="row"
@@ -297,20 +289,6 @@ export default function PharmacyRequests() {
                               <Iconify icon="charm:cross" />
                             </IconButton>
                           </TableCell>
-                          {/* <TableCell align="left">{availablePharmacies}</TableCell> */}
-                          {/* <TableCell align="left">
-                            {isVerified ? "Yes" : "No"}
-                          </TableCell>
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={
-                                (status === "banned" && "error") || "success"
-                              }
-                            >
-                              {sentenceCase(status)}
-                            </Label>
-                          </TableCell> */}
 
                           <TableCell align="right">
                             <UserMoreMenu />

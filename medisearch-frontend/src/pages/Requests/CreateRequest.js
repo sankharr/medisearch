@@ -80,9 +80,7 @@ export default function CreateRequest() {
     },
     validationSchema: RequestSchema,
     onSubmit: () => {
-      //   console.log("form data - ", formik.values);
       createRequest();
-      //   navigate('/dashboard', { replace: true });
     },
   });
 
@@ -140,26 +138,6 @@ export default function CreateRequest() {
       .catch((error) => {
         console.log(error);
       });
-
-    //     medicineList.forEach((item) => {
-    //       const newRequestObject = {
-    //         requestorName,
-    //         requestorDocID,
-    //         email,
-    //         medicineName: item.medicineName,
-    //         quantity: item.quantity,
-    //       };
-    //       axios
-    //         .post(URL, newRequestObject)
-    //         .then((res) => {
-    //           console.log(res.data);
-    //           console.log("Successfully created the request - ", item.name);
-    //           setMedicineList([]);
-    //         })
-    //         .catch((error) => {
-    //           console.log(error);
-    //         });
-    //     });
   };
 
   return (
@@ -174,18 +152,11 @@ export default function CreateRequest() {
           <Typography variant="h4" gutterBottom>
             Create Request
           </Typography>
-          {/* <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Create new request
-          </Button> */}
         </Stack>
 
         <Card>
-          {/* <RequestListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
           <Container maxWidth="sm">
             <ContentStyle>
-              {/* <Typography variant="h4" gutterBottom>
-                Sign in to Minimal
-              </Typography> */}
               <Scrollbar>
                 <FormikProvider value={formik}>
                   <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -228,13 +199,6 @@ export default function CreateRequest() {
                             <TableRow>
                               <TableCell>Medicine Name</TableCell>
                               <TableCell align="right">Quantity</TableCell>
-                              {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                              <TableCell align="right">
-                                Carbs&nbsp;(g)
-                              </TableCell>
-                              <TableCell align="right">
-                                Protein&nbsp;(g)
-                              </TableCell> */}
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -253,11 +217,6 @@ export default function CreateRequest() {
                                 <TableCell align="right">
                                   {row.quantity}
                                 </TableCell>
-                                {/* <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">
-                                  {row.protein}
-                                </TableCell> */}
                               </TableRow>
                             ))}
                           </TableBody>
