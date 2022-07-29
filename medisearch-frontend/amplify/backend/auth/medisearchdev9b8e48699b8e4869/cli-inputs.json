@@ -1,0 +1,58 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "resourceNameTruncated": "medise9b8e4869",
+    "userPoolName": "medisearchdev9b8e4869_userpool_9b8e4869",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Welcome to MediSearch",
+    "emailVerificationMessage": "Please click this link to complete the registration {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+      "email"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+      "address",
+      "name",
+      "phone_number",
+      "updated_at",
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "address",
+      "email",
+      "name",
+      "phone_number",
+      "updated_at"
+    ],
+    "userpoolClientLambdaRole": "medise9b8e4869_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "sharedId": "9b8e4869",
+    "resourceName": "medisearchdev9b8e48699b8e4869",
+    "authSelections": "userPoolOnly",
+    "useDefault": "manual",
+    "usernameAttributes": [
+      "email"
+    ],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": {},
+    "hostedUI": false,
+    "userPoolGroupList": [],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}

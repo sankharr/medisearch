@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-medisearchdev-dev-222948-authRole",
+      "UnauthRoleArn": "arn:aws:iam::923406011381:role/amplify-medisearchdev-dev-222948-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::923406011381:role/amplify-medisearchdev-dev-222948-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-medisearchdev-dev-222948-deployment",
+      "UnauthRoleName": "amplify-medisearchdev-dev-222948-unauthRole",
+      "StackName": "amplify-medisearchdev-dev-222948",
+      "StackId": "arn:aws:cloudformation:us-east-1:923406011381:stack/amplify-medisearchdev-dev-222948/35801f60-0784-11ed-be8d-12a4a24bb93d",
+      "AmplifyAppId": "d3k957ds1jm68e"
+    },
+    "categories": {
+      "auth": {
+        "medisearchdev9b8e48699b8e4869": {}
+      }
+    }
+  }
+}
