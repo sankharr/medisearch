@@ -14,6 +14,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Auth } from "aws-amplify";
 
 // ----------------------------------------------------------------------
 
@@ -21,8 +22,8 @@ import Select from "@mui/material/Select";
 
 export default function RegisterForm() {
   const Auth_URL = process.env.REACT_APP_REGISTER_AUTH_URL;
-    const Patient_URL = process.env.REACT_APP_REGISTER_PATIENT_URL;
-//   const Patient_URL = "http://localhost:5050/patient";
+  const Patient_URL = process.env.REACT_APP_REGISTER_PATIENT_URL;
+  //   const Patient_URL = "http://localhost:5050/patient";
 
   const navigate = useNavigate();
 
@@ -34,6 +35,32 @@ export default function RegisterForm() {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  async function signUp(formObject) {
+    try {
+      const { user } = await Auth.signUp({
+        username: formObject.email,
+        password: formObject.password,
+        attributes: {
+          name: formObject.firstname + " " + formObject.lastname, // optional
+          email: formObject.email,
+          "custom:phoneNumber": formObject.phoneNumber,
+          "custom:city": formObject.city,
+          "custom:district": formObject.district,
+          "custom:userType": "Patient",
+          // other custom attributes
+        },
+      });
+      console.log(user);
+
+      if (user){
+        console.log("navigation successful")
+        // navigate("/")
+      }
+    } catch (error) {
+      console.log("error signing up:", error);
+    }
+  }
 
   const submitValues = (formObject) => {
     let dataObject = {
@@ -96,7 +123,7 @@ export default function RegisterForm() {
           setStatus({ success: false });
           setSubmitting(false);
           console.log("values", values);
-          submitValues(values);
+          signUp(values);
         } catch (err) {
           console.error(err);
           setStatus({ success: false });
